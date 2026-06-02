@@ -15,7 +15,7 @@ class ResumeApp {
         this.resumePreviewPath = 'assets/resume-preview.jpg';
         
         // Google Drive FILE_ID for PDF download
-        this.driveFileId = 'YOUR_FILE_ID_HERE'; // ← REPLACE WITH YOUR GOOGLE DRIVE FILE ID
+        this.driveFileId = '1GRANukgfXOrSOYokm7RxLCMkdnH7-7GX'; // ← REPLACE WITH YOUR GOOGLE DRIVE FILE ID
         
         // Google Drive direct download link
         this.driveDownloadPath = `https://drive.google.com/uc?export=download&id=${this.driveFileId}`;
