@@ -1,0 +1,337 @@
+/* ============================================
+   SAKIB OS - COMPLETE STYLE SYSTEM v2.0
+   ============================================ */
+
+:root {
+    /* Core Colors */
+    --bg-primary: #04050a;
+    --bg-secondary: #0a0d16;
+    --bg-tertiary: #1a1a25;
+    --bg-glass: rgba(10, 13, 22, 0.9);
+    --bg-glass-light: rgba(20, 23, 35, 0.7);
+    
+    /* Accent Colors - Dynamic */
+    --accent-primary: #a78bfa;
+    --accent-secondary: #8b5cf6;
+    --accent-glow: rgba(167, 139, 250, 0.4);
+    
+    /* Text Colors */
+    --text-primary: #e8e6f0;
+    --text-secondary: #8b8898;
+    --text-muted: #6b6878;
+    --text-bright: #ffffff;
+    
+    /* Border Colors */
+    --border-primary: rgba(167, 139, 250, 0.3);
+    --border-secondary: rgba(255, 255, 255, 0.1);
+    --border-glass: rgba(255, 255, 255, 0.06);
+    
+    /* System Sizes */
+    --taskbar-height: 48px;
+    --window-titlebar-height: 38px;
+    --window-min-width: 400px;
+    --window-min-height: 300px;
+    
+    /* Animation Speeds */
+    --anim-fast: 150ms;
+    --anim-normal: 300ms;
+    --anim-slow: 500ms;
+    
+    /* Font System */
+    --font-display: 'Syne', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-body: 'Instrument Sans', sans-serif;
+    
+    /* Z-Index Layers */
+    --z-background: 0;
+    --z-desktop: 10;
+    --z-window-inactive: 20;
+    --z-window-active: 30;
+    --z-taskbar: 100;
+    --z-overlay: 200;
+    --z-start-menu: 250;
+    --z-toast: 300;
+    --z-suggestions: 400;
+    --z-boot: 1000;
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-primary);
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.hidden { display: none !important; }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+::selection { background: rgba(167,139,250,0.3); color: #fff; }
+
+/* ============================================
+   BOOT SCREEN
+   ============================================ */
+.boot-screen {
+    position: fixed; inset: 0; z-index: var(--z-boot);
+    background: var(--bg-primary);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 40px; transition: opacity 0.5s ease;
+}
+.boot-logo { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.boot-icon [data-lucide] {
+    width: 64px; height: 64px; stroke-width: 1.5;
+    color: var(--accent-primary);
+    filter: drop-shadow(0 0 20px var(--accent-glow));
+    animation: bootSpin 3s linear infinite;
+}
+@keyframes bootSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.boot-text { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.boot-brand { font-family: var(--font-display); font-size: 32px; font-weight: 700; letter-spacing: 2px; color: var(--text-bright); }
+.boot-version { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); letter-spacing: 1px; }
+.boot-loader { width: 200px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 1px; overflow: hidden; }
+.loader-bar { width: 0%; height: 100%; background: var(--accent-primary); box-shadow: 0 0 10px var(--accent-glow); animation: bootLoad 2s ease-in-out forwards; }
+@keyframes bootLoad { 0% { width: 0%; } 100% { width: 100%; } }
+.boot-messages { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); text-align: center; min-height: 20px; }
+
+/* ============================================
+   OS SHELL
+   ============================================ */
+.os-shell { position: fixed; inset: 0; overflow: hidden; transition: opacity 0.3s ease; }
+
+/* ============================================
+   BACKGROUND LAYER
+   ============================================ */
+.background-layer { position: fixed; inset: 0; z-index: var(--z-background); }
+.wallpaper {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #04050a 0%, #0a0d16 30%, #0f1629 60%, #04050a 100%);
+    background-size: 400% 400%;
+    animation: wallpaperShift 20s ease infinite;
+}
+.wallpaper::before { content: ''; position: absolute; inset: 0; background-image: url('../assets/wallpaper.jpg'); background-size: cover; background-position: center; opacity: 0.3; }
+@keyframes wallpaperShift { 0%,100%{background-position:0% 50%}25%{background-position:100% 0%}50%{background-position:100% 100%}75%{background-position:0% 100%} }
+.particle-canvas { position: absolute; inset: 0; opacity: 0.4; pointer-events: none; }
+.noise-overlay { position: absolute; inset: 0; opacity: 0.02; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); }
+.scanlines { position: absolute; inset: 0; pointer-events: none; opacity: 0.3; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); }
+.vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 60%, rgba(4,5,10,0.6) 100%); }
+
+/* ============================================
+   DESKTOP LAYER
+   ============================================ */
+.desktop-layer { position: fixed; inset: 0; top: 0; bottom: var(--taskbar-height); z-index: var(--z-desktop); padding: 20px; pointer-events: none; overflow-y: auto; overflow-x: hidden; }
+.desktop-icons { display: flex; flex-direction: column; gap: 6px; pointer-events: all; padding-bottom: 20px; min-height: min-content; }
+.desktop-icon { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 75px; padding: 8px 6px; border-radius: 8px; cursor: pointer; transition: all var(--anim-fast) ease; position: relative; flex-shrink: 0; }
+.desktop-icon:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+.desktop-icon:active { transform: scale(0.95); }
+.desktop-icon.selected { background: rgba(255,255,255,0.08); outline: 1px solid var(--accent-primary); outline-offset: -1px; }
+.icon-graphic { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; transition: all var(--anim-fast) ease; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+.desktop-icon:hover .icon-graphic { transform: scale(1.12); filter: drop-shadow(0 0 12px var(--accent-glow)); }
+.icon-graphic [data-lucide] { width: 32px; height: 32px; stroke-width: 1.5; color: var(--text-secondary); transition: all var(--anim-fast) ease; }
+.desktop-icon:hover .icon-graphic [data-lucide] { color: var(--accent-primary); }
+.desktop-icon.selected .icon-graphic [data-lucide] { color: var(--accent-primary); }
+.icon-label { font-size: 10px; color: var(--text-secondary); text-align: center; text-shadow: 0 1px 3px rgba(0,0,0,0.8); font-family: var(--font-mono); letter-spacing: 0.04em; line-height: 1.2; word-wrap: break-word; max-width: 70px; }
+.desktop-icon:hover .icon-label { color: var(--text-bright); }
+.desktop-icon.selected .icon-label { color: var(--accent-primary); }
+.desktop-icon[title]:hover::after { content: attr(title); position: absolute; left: 85px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.85); color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-family: var(--font-mono); white-space: nowrap; z-index: 1000; pointer-events: none; border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(10px); animation: tooltipFadeIn 0.2s ease; }
+@keyframes tooltipFadeIn { from { opacity: 0; transform: translateY(-50%) translateX(-5px); } to { opacity: 1; transform: translateY(-50%) translateX(0); } }
+.desktop-layer::-webkit-scrollbar { width: 3px; }
+.desktop-layer::-webkit-scrollbar-track { background: transparent; }
+.desktop-layer::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 2px; }
+
+/* ============================================
+   WINDOW SYSTEM
+   ============================================ */
+.window-container { position: fixed; inset: 0; top: 0; bottom: var(--taskbar-height); z-index: var(--z-window-inactive); pointer-events: none; }
+.os-window { position: absolute; min-width: var(--window-min-width); min-height: var(--window-min-height); background: var(--bg-glass); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid var(--border-glass); border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset; overflow: hidden; pointer-events: all; display: flex; flex-direction: column; transition: box-shadow var(--anim-normal) ease, filter var(--anim-normal) ease; animation: windowOpen var(--anim-normal) cubic-bezier(0.34,1.56,0.64,1); }
+.os-window.inactive { filter: brightness(0.7); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+.os-window.active { z-index: var(--z-window-active); box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 30px var(--accent-glow), 0 0 0 1px var(--border-primary) inset; }
+.os-window.mobile-fullscreen { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: var(--taskbar-height) !important; width: 100% !important; border-radius: 0 !important; animation: slideUpMobile 0.4s cubic-bezier(0.22,1,0.36,1) !important; }
+@keyframes windowOpen { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideUpMobile { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+/* Window Titlebar */
+.window-titlebar { height: var(--window-titlebar-height); background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border-glass); display: flex; align-items: center; padding: 0 12px; gap: 8px; cursor: grab; flex-shrink: 0; }
+.window-titlebar:active { cursor: grabbing; }
+.window-title { flex: 1; font-size: 12px; font-weight: 500; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 6px; }
+
+/* Window Title Icon - BRAND ICONS VISIBLE */
+.window-title-icon { display: flex; align-items: center; flex-shrink: 0; }
+.window-title-icon [data-lucide] { width: 16px; height: 16px; stroke-width: 2; color: var(--text-secondary); }
+.os-window.active .window-title-icon [data-lucide] { color: var(--accent-primary); }
+
+/* Window Controls - ALWAYS VISIBLE */
+.window-controls { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.window-control { width: 13px; height: 13px; border-radius: 50%; border: none; cursor: pointer; transition: all var(--anim-fast) ease; display: flex; align-items: center; justify-content: center; padding: 0; position: relative; }
+.window-control.minimize { background: #fbbf24; }
+.window-control.maximize { background: #34d399; }
+.window-control.close { background: #ef4444; }
+.window-control:hover { filter: brightness(1.3); transform: scale(1.15); }
+.window-control:active { transform: scale(0.95); }
+
+/* SVG icons inside window controls */
+.window-control svg { opacity: 0.7; transition: opacity 0.15s ease; pointer-events: none; }
+.window-control:hover svg { opacity: 1; }
+.window-control.minimize svg { color: #78350f; }
+.window-control.maximize svg { color: #064e3b; }
+.window-control.close svg { color: #7f1d1d; }
+
+.window-content { flex: 1; overflow-y: auto; overflow-x: hidden; position: relative; }
+
+/* ============================================
+   TASKBAR
+   ============================================ */
+.taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: var(--taskbar-height); background: rgba(4,5,10,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border-glass); z-index: var(--z-taskbar); display: flex; align-items: center; padding: 0 12px; gap: 8px; }
+.taskbar-left, .taskbar-center, .taskbar-right { display: flex; align-items: center; gap: 4px; }
+.taskbar-center { flex: 1; justify-content: center; max-width: 400px; margin: 0 auto; }
+.taskbar-right { margin-left: auto; }
+.taskbar-divider { width: 1px; height: 24px; background: var(--border-glass); margin: 0 4px; }
+.taskbar-button { width: 36px; height: 36px; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: all var(--anim-fast) ease; }
+.taskbar-button:hover { background: rgba(255,255,255,0.08); color: var(--text-bright); }
+.taskbar-button.active { background: rgba(167,139,250,0.15); color: var(--accent-primary); }
+.taskbar-button [data-lucide] { width: 22px; height: 22px; stroke-width: 2; }
+.running-apps { display: flex; gap: 2px; }
+.running-app-indicator { width: 36px; height: 36px; border: none; background: transparent; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--anim-fast) ease; position: relative; }
+.running-app-indicator:hover { background: rgba(255,255,255,0.08); }
+.running-app-indicator.active { color: var(--accent-primary); }
+.running-app-indicator.active::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--accent-primary); }
+.running-app-indicator [data-lucide] { width: 18px; height: 18px; stroke-width: 1.8; color: var(--text-muted); }
+.running-app-indicator.active [data-lucide] { color: var(--accent-primary); }
+
+/* ============================================
+   COMMAND BAR
+   ============================================ */
+.command-bar-wrapper { width: 100%; height: 32px; background: rgba(255,255,255,0.04); border: 1px solid var(--border-glass); border-radius: 8px; display: flex; align-items: center; padding: 0 10px; gap: 6px; transition: all 0.2s ease; cursor: text; }
+.command-bar-wrapper:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+.command-bar-wrapper:focus-within { border-color: var(--border-primary) !important; background: rgba(255,255,255,0.08) !important; box-shadow: 0 0 0 3px rgba(167,139,250,0.1); }
+.command-bar-wrapper.shake { animation: commandShake 0.5s ease; border-color: #ef4444 !important; }
+@keyframes commandShake { 0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-3px)}20%,40%,60%,80%{transform:translateX(3px)} }
+.command-prompt-icon { display: flex; align-items: center; flex-shrink: 0; }
+.command-prompt-icon [data-lucide] { width: 14px; height: 14px; stroke-width: 2.5; color: var(--accent-primary); }
+.command-input-real { flex: 1; background: none; border: none; outline: none; color: var(--text-primary); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.5px; min-width: 0; caret-color: var(--accent-primary); }
+.command-input-real::placeholder { color: var(--text-muted); opacity: 0.6; }
+.command-input-real::selection { background: rgba(167,139,250,0.3); color: #fff; }
+
+/* ============================================
+   COMMAND SUGGESTIONS
+   ============================================ */
+.command-suggestions { background: var(--bg-glass); backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%); border: 1px solid var(--border-glass); border-radius: 10px; box-shadow: 0 12px 40px rgba(0,0,0,0.6); z-index: var(--z-suggestions); max-height: 280px; overflow-y: auto; animation: suggestionsIn 0.15s ease; }
+@keyframes suggestionsIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.suggestion-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; cursor: pointer; transition: all 0.15s ease; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.suggestion-item:last-child { border-bottom: none; }
+.suggestion-item:hover, .suggestion-item.selected { background: rgba(167,139,250,0.1); }
+.suggestion-icon [data-lucide] { width: 14px; height: 14px; stroke-width: 2; color: var(--text-muted); }
+.suggestion-item.selected .suggestion-icon [data-lucide] { color: var(--accent-primary); }
+.suggestion-name { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--text-primary); flex-shrink: 0; }
+.suggestion-desc { font-family: var(--font-body); font-size: 11px; color: var(--text-muted); flex: 1; }
+.suggestion-aliases { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); opacity: 0.5; flex-shrink: 0; }
+.no-results-content { display: flex; align-items: center; gap: 8px; padding: 12px 14px; }
+.no-results-content [data-lucide] { width: 16px; height: 16px; stroke-width: 2; color: #ef4444; }
+.no-results-content span { font-size: 12px; color: var(--text-secondary); }
+.closest-suggestions { display: flex; align-items: center; gap: 6px; padding: 8px 14px 12px; flex-wrap: wrap; }
+.closest-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); }
+.closest-cmd { font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); border-radius: 4px; color: var(--accent-primary); cursor: pointer; transition: all 0.2s ease; }
+.closest-cmd:hover { background: rgba(167,139,250,0.2); transform: translateY(-1px); }
+
+/* ============================================
+   START MENU
+   ============================================ */
+.start-menu { position: fixed; bottom: calc(var(--taskbar-height) + 8px); left: 12px; width: 300px; background: var(--bg-glass); backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%); border: 1px solid var(--border-glass); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.6); z-index: var(--z-start-menu); overflow: hidden; animation: startMenuOpen var(--anim-normal) cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes startMenuOpen { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.start-menu-header { padding: 20px; background: rgba(167,139,250,0.08); border-bottom: 1px solid var(--border-glass); display: flex; align-items: center; gap: 12px; }
+.user-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: white; font-family: var(--font-display); }
+.user-name { font-size: 14px; font-weight: 600; color: var(--text-bright); }
+.user-title { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.start-menu-apps { padding: 8px; }
+.start-menu-item { padding: 10px 16px; display: flex; align-items: center; gap: 12px; border-radius: 8px; cursor: pointer; transition: all var(--anim-fast) ease; font-size: 13px; color: var(--text-secondary); }
+.start-menu-item:hover { background: rgba(255,255,255,0.06); color: var(--text-bright); }
+.start-menu-footer { border-top: 1px solid var(--border-glass); padding: 8px; }
+.menu-icon { display: flex; align-items: center; width: 20px; justify-content: center; }
+.menu-icon [data-lucide] { width: 18px; height: 18px; stroke-width: 1.8; color: var(--text-secondary); }
+.start-menu-item:hover .menu-icon [data-lucide] { color: var(--accent-primary); }
+
+/* ============================================
+   SYSTEM SCREENS
+   ============================================ */
+.system-screen { position: fixed; inset: 0; background: var(--bg-primary); z-index: 9999; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.system-message { text-align: center; animation: fadeIn var(--anim-slow) ease; }
+.disconnect-icon [data-lucide] { width: 80px; height: 80px; stroke-width: 1.5; color: var(--accent-primary); filter: drop-shadow(0 0 30px var(--accent-glow)); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.05)} }
+.disconnect-text { font-size: 28px; font-weight: 700; color: var(--text-bright); margin-top: 24px; letter-spacing: 4px; font-family: var(--font-display); }
+.disconnect-sub { font-size: 14px; color: var(--text-muted); margin-top: 12px; font-family: var(--font-mono); }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* ============================================
+   TOAST - FIXED
+   ============================================ */
+.toast {
+    position: fixed;
+    bottom: calc(var(--taskbar-height) + 16px);
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    background: rgba(10, 13, 22, 0.95);
+    border: 1px solid var(--border-glass);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-primary);
+    z-index: var(--z-toast);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    max-width: 80vw;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================
+   SYSTEM INDICATORS
+   ============================================ */
+.system-indicators { display: flex; align-items: center; gap: 12px; }
+.indicator { background: none; border: none; color: var(--text-muted); cursor: pointer; transition: color var(--anim-fast) ease; padding: 4px; display: flex; align-items: center; }
+.indicator:hover { color: var(--text-bright); }
+.indicator [data-lucide] { width: 18px; height: 18px; stroke-width: 1.8; }
+.time-indicator { font-family: var(--font-mono); font-size: 11px; cursor: default; padding: 4px 8px; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    :root { --window-min-width: 100%; --taskbar-height: 44px; }
+    .desktop-icons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding-bottom: 60px; justify-items: center; align-content: start; }
+    .desktop-icon { width: 68px; padding: 10px 4px; gap: 4px; }
+    .icon-graphic { width: 40px; height: 40px; }
+    .icon-graphic [data-lucide] { width: 28px; height: 28px; }
+    .icon-label { font-size: 9px; max-width: 64px; }
+    .desktop-icon[title]:hover::after { display: none; }
+    .taskbar-center { display: none; }
+    .start-menu { width: 100%; left: 0; bottom: var(--taskbar-height); border-radius: 12px 12px 0 0; }
+    .running-apps { max-width: calc(100vw - 120px); overflow-x: auto; scrollbar-width: none; }
+    .running-apps::-webkit-scrollbar { display: none; }
+    .command-suggestions { position: fixed !important; bottom: calc(var(--taskbar-height) + 8px) !important; top: auto !important; left: 8px !important; right: 8px !important; width: auto !important; max-height: 40vh; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    :root { --window-min-width: 500px; }
+    .desktop-icons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; max-width: 200px; }
+    .desktop-icon { width: 80px; }
+    .taskbar-center { max-width: 250px; }
+}
