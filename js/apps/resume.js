@@ -74,7 +74,7 @@ class ResumeApp {
                         
                         <!-- Action Buttons -->
                         <div class="btn-group-mc">
-                            <button class="btn-mc btn-primary-mc" onclick="window.resumeApp.viewResumeInOS()"><span>👁 View Resume</span></button>
+                            <button class="btn-mc btn-primary-mc" onclick="window.resumeApp.viewResumeInOS()"><span>View Resume</span></button>
                             <button class="btn-mc btn-download-mc" onclick="window.resumeApp.downloadResumePDF()"><span>⬇ Download PDF</span></button>
                             <button class="btn-mc btn-ghost-mc" onclick="window.resumeApp.printResume()"><span>🖨 Print Resume</span></button>
                         </div>
