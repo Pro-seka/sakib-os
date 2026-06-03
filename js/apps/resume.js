@@ -12,7 +12,7 @@ class ResumeApp {
         // ═══════════════════════════════════════
         
         // Local preview image (shown in the resume section)
-        this.resumePreviewPath = 'assets/resume-preview.jpg';
+        this.resumePreviewPath = 'assets/resume-preview.jpeg';
         
         // Google Drive FILE_ID for PDF download
         this.driveFileId = '1GRANukgfXOrSOYokm7RxLCMkdnH7-7GX'; // ← REPLACE WITH YOUR GOOGLE DRIVE FILE ID
