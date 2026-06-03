@@ -1,5 +1,6 @@
 # sakib-os
 My portfolio as a live operating system.
+[Click here to explore the OS](https://pro-seka.github.io/sakib-os/)
 
 ## Project Structure
 
