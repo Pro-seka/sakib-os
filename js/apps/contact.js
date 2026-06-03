@@ -45,6 +45,7 @@ class ContactApp {
                             <a href="https://github.com/Pro-seka" target="_blank" rel="noopener" class="contact-social-pill-mc">GitHub</a>
                             <a href="https://www.linkedin.com/in/sakibhasan-dev/" target="_blank" rel="noopener" class="contact-social-pill-mc">LinkedIn</a>
                             <a href="https://www.youtube.com/@thesakiib" target="_blank" rel="noopener" class="contact-social-pill-mc">YouTube</a>
+                            <a href="https://discord.com/users/734346161921589250" target="_blank" rel="noopener" class="contact-social-pill-mc">Discord</a>
                             <a href="https://www.facebook.com/sakib.hasan.319945" target="_blank" rel="noopener" class="contact-social-pill-mc">Facebook</a>
                             <a href="https://t.me/Sakib_hi" target="_blank" rel="noopener" class="contact-social-pill-mc">Telegram</a>
                             <a href="https://x.com/Sakiiiiiiiib" target="_blank" rel="noopener" class="contact-social-pill-mc">X/Twitter</a>
