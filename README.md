@@ -2,6 +2,8 @@
 My portfolio as a live operating system.
 [Click here to explore the OS](https://pro-seka.github.io/sakib-os/)
 
+[Click here for a quick tour](https://youtu.be/rf_w0sNQK5s?si=OB76uV5xtDJeVRlO)
+
 ## Project Structure
 
 ```text
