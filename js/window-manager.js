@@ -1,5 +1,5 @@
 // ============================================
-// WINDOW MANAGEMENT SYSTEM v2.2
+// WINDOW MANAGEMENT SYSTEM
 // ============================================
 
 class WindowManager {
